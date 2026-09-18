@@ -136,7 +136,7 @@ Public live search remains available at `GET /v1/search?q=…` on the origin; AZ
 | `snapshots/` | packed index copies (MESH-VAULT) |
 | `settings.json` | origin + sync-on-start |
 
-Verify happens **before** a record is marked installed. A hash mismatch is a ledger `verify_fail` and is not installed.
+Verify happens **before** a record is marked installed. A hash mismatch is a ledger `verify_fail` and is not installed. A live first-run against the public shelf (284 packed cards) imported 275 verified records and left 9 fail-closed; a later incremental sync appended tip/metadata updates without wiping those 275 objects.
 
 ## Tests
 

@@ -23,6 +23,7 @@ export async function fetchText(
       Accept: "application/json, text/plain, */*",
     },
     redirect: "follow",
+    signal: AbortSignal.timeout(90_000),
   });
   const text = await res.text();
   return {
@@ -43,6 +44,7 @@ export async function fetchBytes(
       Accept: "*/*",
     },
     redirect: "follow",
+    signal: AbortSignal.timeout(90_000),
   });
   const bytes = Buffer.from(await res.arrayBuffer());
   const disposition = res.headers.get("content-disposition") || "";
