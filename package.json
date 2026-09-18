@@ -1,0 +1,45 @@
+{
+  "name": "azcl",
+  "version": "0.1.0",
+  "description": "AZCL (AZCorpusLibrary) — local append-only vault client for the Aziel Digital Library",
+  "license": "Apache-2.0",
+  "author": "Aziel Eliab",
+  "type": "module",
+  "bin": {
+    "azcl": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "public",
+    "dossiers",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && node scripts/copy-public.mjs",
+    "test": "npm run build && node --test test/*.test.js",
+    "azcl": "node dist/cli.js",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzielEliab/AZCL"
+  },
+  "keywords": [
+    "azcl",
+    "aziel",
+    "library",
+    "vault",
+    "hashchain",
+    "mcp"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  }
+}

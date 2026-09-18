@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-test/
+.azcl/
+*.sqlite
+*.sqlite-journal
+.DS_Store
+coverage/
+.env

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AZCL — local Aziel Corpus Library</title>
+  <style>
+    :root {
+      --paper: #f4efe4;
+      --ink: #1c1914;
+      --mute: #5c564c;
+      --rule: #d5ccb8;
+      --card: #fffdf7;
+      --ok: #2f6b4f;
+      --warn: #8a4b1f;
+      --accent: #2b4c6f;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+    header {
+      padding: 1.4rem 1.6rem 1rem;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    h1 { font-size: 1.35rem; font-weight: 600; margin: 0; letter-spacing: 0.02em; }
+    .lens { color: var(--mute); font-size: 0.92rem; }
+    main { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0; min-height: calc(100vh - 5rem); }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+    section { padding: 1.2rem 1.6rem 2rem; }
+    .pane { border-right: 1px solid var(--rule); }
+    label { display: block; font-size: 0.82rem; color: var(--mute); margin-bottom: 0.35rem; }
+    input, button, textarea {
+      font: inherit;
+      border: 1px solid var(--rule);
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 4px;
+    }
+    input, textarea { width: 100%; padding: 0.55rem 0.7rem; }
+    .row { display: flex; gap: 0.5rem; margin: 0.6rem 0 1rem; flex-wrap: wrap; }
+    button { padding: 0.5rem 0.85rem; cursor: pointer; background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    button.ghost { background: transparent; color: var(--ink); }
+    .meta { color: var(--mute); font-size: 0.88rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      padding: 0.8rem 0.9rem;
+      margin: 0 0 0.65rem;
+      cursor: pointer;
+    }
+    .card h3 { margin: 0 0 0.25rem; font-size: 1.02rem; }
+    .hash { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.78rem; word-break: break-all; color: var(--accent); }
+    .status { display: flex; gap: 0.8rem; flex-wrap: wrap; margin: 0.4rem 0 1rem; }
+    .pill { border: 1px solid var(--rule); padding: 0.15rem 0.5rem; border-radius: 999px; font-size: 0.8rem; }
+    .ok { color: var(--ok); }
+    .warn { color: var(--warn); }
+    pre { white-space: pre-wrap; word-break: break-word; font-size: 0.8rem; background: var(--card); border: 1px solid var(--rule); padding: 0.7rem; }
+    a { color: var(--accent); }
+    #progress { min-height: 1.3rem; color: var(--mute); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>AZCL — local corpus vault</h1>
+      <div class="lens">Lamb Lens: Service → Clarity → Peace · Author Aziel Eliab</div>
+    </div>
+    <div class="meta" id="homeLine">offline browse after first import</div>
+  </header>
+  <main>
+    <section class="pane">
+      <div class="status" id="counts"></div>
+      <label for="q">Search title, concept, AZDOC, sha256, or chain tip</label>
+      <div class="row">
+        <input id="q" placeholder="harmonic, AZDOC-, paper chain…" />
+        <button id="searchBtn" type="button">Search</button>
+        <button id="syncBtn" class="ghost" type="button">Sync</button>
+      </div>
+      <div id="progress"></div>
+      <div id="list"></div>
+    </section>
+    <section>
+      <div id="detail" class="meta">Select a record. Hashchain tips stay visible.</div>
+      <h2 style="font-size:1.05rem;margin:1.4rem 0 0.4rem">Settings</h2>
+      <label for="origin">Origin URL (front door, no operator token)</label>
+      <input id="origin" />
+      <div class="row">
+        <label style="display:flex;align-items:center;gap:0.4rem">
+          <input id="syncOnStart" type="checkbox" style="width:auto" />
+          sync on start
+        </label>
+        <button id="saveSettings" type="button">Save settings</button>
+      </div>
+      <p class="meta">OpenAPI: <a href="/openapi.json">/openapi.json</a> · MCP: <code>azcl mcp</code></p>
+    </section>
+  </main>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    async function api(path, opt) {
+      const res = await fetch(path, opt);
+      const text = await res.text();
+      try { return { ok: res.ok, status: res.status, data: JSON.parse(text) }; }
+      catch { return { ok: res.ok, status: res.status, data: text }; }
+    }
+    function hash(v) { return v ? `<div class="hash">${v}</div>` : ""; }
+    async function refreshStatus() {
+      const s = await api("/api/status");
+      if (!s.ok) return;
+      const c = s.data.counts || {};
+      $("counts").innerHTML = [
+        ["installed", c.installed],
+        ["master rows", c.master],
+        ["objects", c.objects],
+        ["ledger", c.ledger],
+      ].map(([k,v]) => `<span class="pill">${k}: <b>${v ?? 0}</b></span>`).join("");
+      $("homeLine").textContent = s.data.home + (c.installed ? ` · ${c.installed} records local` : " · empty vault — run Sync");
+      const set = s.data.settings || {};
+      $("origin").value = set.origin || "";
+      $("syncOnStart").checked = set.sync_on_start !== false;
+    }
+    function renderList(results) {
+      $("list").innerHTML = (results || []).map((r) => `
+        <article class="card" data-id="${r.record_id}">
+          <h3>${escapeHtml(r.title || r.record_id)}</h3>
+          <div class="meta">${escapeHtml(r.record_id)} · ${escapeHtml(r.library || "")} · ${r.installed ? '<span class="ok">installed</span>' : '<span class="warn">pending</span>'}</div>
+          <div class="meta">${escapeHtml(r.concept || "")}</div>
+        </article>`).join("") || `<p class="meta">No local hits. Sync while online, then search offline.</p>`;
+      for (const el of document.querySelectorAll(".card")) {
+        el.addEventListener("click", () => show(el.getAttribute("data-id")));
+      }
+    }
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c]));
+    }
+    async function show(id) {
+      const r = await api("/api/records/" + encodeURIComponent(id));
+      if (!r.ok) { $("detail").innerHTML = "<p class='warn'>not found</p>"; return; }
+      const rec = r.data.record;
+      const tips = (r.data.tips || [])[0] || {};
+      $("detail").innerHTML = `
+        <h2 style="margin-top:0;font-size:1.15rem">${escapeHtml(rec.title)}</h2>
+        <p class="meta">${escapeHtml(rec.record_id)} · ${escapeHtml(rec.json_record_id || "")}</p>
+        <p>${escapeHtml(rec.concept)}</p>
+        <p class="meta">content_sha256</p>${hash(rec.content_sha256)}
+        <p class="meta">paper_chain_tip / chain_tip</p>${hash(tips.paper_chain_tip || rec.paper_chain_tip)}
+        ${hash(rec.chain_tip && rec.chain_tip !== rec.paper_chain_tip ? rec.chain_tip : "")}
+        <p class="meta">sequence ${rec.paper_chain_sequence ?? "—"} · author ${escapeHtml(rec.author || "")}</p>
+        <p><a href="/api/records/${encodeURIComponent(id)}/file" target="_blank">open verified file</a>
+           · <a href="/api/records/${encodeURIComponent(id)}/metadata" target="_blank">metadata.json</a>
+           · <a href="/api/records/${encodeURIComponent(id)}/history" target="_blank">history</a></p>
+        <p class="meta">append-only history: ${(r.data.history || []).length} row(s)</p>
+      `;
+    }
+    async function search() {
+      const q = $("q").value.trim();
+      const r = await api("/api/search?q=" + encodeURIComponent(q));
+      renderList(r.data.results || []);
+    }
+    $("searchBtn").onclick = search;
+    $("q").addEventListener("keydown", (e) => { if (e.key === "Enter") search(); });
+    $("syncBtn").onclick = async () => {
+      $("progress").textContent = "Syncing live packed index…";
+      const r = await api("/api/sync", { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
+      $("progress").textContent = r.ok
+        ? `imported ${r.data.imported}, updated ${r.data.updated}, skipped ${r.data.skipped}, failed ${r.data.failed}`
+        : "sync failed: " + (r.data.error || r.status);
+      await refreshStatus();
+      await search();
+    };
+    $("saveSettings").onclick = async () => {
+      await api("/api/settings", {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ origin: $("origin").value, sync_on_start: $("syncOnStart").checked }),
+      });
+      $("progress").textContent = "Settings saved.";
+      await refreshStatus();
+    };
+    refreshStatus().then(search);
+  </script>
+</body>
+</html>
