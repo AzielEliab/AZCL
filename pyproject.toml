@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "azcl"
+# Packaging requires a version. 0.0.0 means no release has shipped.
+version = "0.0.0"
+description = "Local client for the Aziel Digital Library. This package is not ready yet."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "Aziel Eliab" }]
+license = { text = "Apache-2.0" }
+dependencies = []
+
+[project.scripts]
+azcl = "azcl.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
