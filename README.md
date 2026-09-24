@@ -138,18 +138,31 @@ Public live search remains available at `GET /v1/search?q=…` on the origin; AZ
 
 Verify happens **before** a record is marked installed. A hash mismatch is a ledger `verify_fail` and is not installed. A live first-run against the public shelf (284 packed cards) imported 275 verified records and left 9 fail-closed; a later incremental sync appended tip/metadata updates without wiping those 275 objects.
 
+## Download
+
+The counted landing is the Worker `azcl-download-tracker`. It is not deployed from this repository. A teammate deploys it to:
+
+https://azcl-download-tracker.vibelock.workers.dev/
+
+`GET /download` returns `azcl-0.1.0.tar.gz`, the client source packed from this repo. Create KV namespace `AZCL_DOWNLOADS`, put its id in `workers/download-tracker/wrangler.toml`, and deploy that Worker. See `workers/download-tracker/README.md`.
+
+Rebuild the gzip after client changes:
+
+```bash
+node scripts/pack-release.mjs
+```
+
 ## Tests
 
 ```bash
 npm test
 ```
 
-Covers SHA-256 verify, append-only master merge, CAS retention, and a mock-origin first import + incremental update.
+Covers SHA-256 verify, append-only master merge, CAS retention, a mock-origin first import plus incremental update, and the download tracker (real gzip, counts per branch and fork).
 
 ## Identity
 
-- **This is:** a local reader replica of the public Aziel shelf.
-- **This is not:** a VPN, a public mesh host, an operator-token client, or a rewrite of library history.
+AZCL is a local reader replica of the public Aziel shelf. Author: Aziel Eliab. License: Apache-2.0.
 
 Companion papers in `docs/`: MESH-VAULT-1.0, RL-WP-0.1-library, SOFTWARE-SITE-DOSSIER-1.0.
 

@@ -1,0 +1,23 @@
+name = "azcl-download-tracker"
+main = "src/index.js"
+compatibility_date = "2026-09-24"
+workers_dev = true
+# Same Cloudflare account as the other Aziel product trackers (public wrangler configs).
+account_id = "ac575a9b822bea2bed97d0ab73aed238"
+
+# Teammate, before the first deploy:
+#   npx wrangler kv namespace create AZCL_DOWNLOADS
+# Paste the returned id here. Do not reuse AZCHAT_DOWNLOADS, PEACELOCK_DOWNLOADS,
+# or any other product namespace. A placeholder id will fail deploy on purpose.
+[[kv_namespaces]]
+binding = "DOWNLOADS"
+id = "replace-with-azcl-downloads-namespace-id"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/", "/download", "/download/*", "/stats", "/event", "/go", "/count", "/install.sh"]
+
+[observability]
+enabled = true
+head_sampling_rate = 1
