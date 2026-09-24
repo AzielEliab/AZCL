@@ -89,7 +89,11 @@ test("landing names the product and points Download at /download", async () => {
   assert.match(html, /prefers-color-scheme:\s*dark/);
   assert.match(html, /:focus-visible/);
   assert.match(html, new RegExp(VERSION));
+  assert.match(html, /src="\/preview.png"/);
   assert.doesNotMatch(html, /this is not/i);
+  const preview = readFileSync(path.join(root, "workers/download-tracker/public/preview.png"));
+  assert.equal(preview[0], 0x89);
+  assert.equal(preview[1], 0x50);
 });
 
 test("theme pairs meet WCAG AA contrast", () => {
@@ -186,7 +190,8 @@ test("install.sh curls the counted download and does not increment by itself", a
   const res = await worker.fetch(request("/install.sh"), box);
   assert.equal(res.status, 200);
   const text = await res.text();
-  assert.match(text, /\/download\?asset=azcl-0\.1\.0\.tar\.gz/);
+  assert.match(text, /ASSET="azcl-0\.1\.0\.tar\.gz"/);
+  assert.match(text, /\/download\?asset=\$\{ASSET\}/);
   assert.match(text, /node dist\/cli\.js init/);
   const count = await (await worker.fetch(request("/count"), box)).json();
   assert.equal(count.downloads, 0);
@@ -197,6 +202,6 @@ test("parseDims marks a different owner as a fork", () => {
   const dims = parseDims({ owner: "Ada", repo: "AZCL", branch: "feature" });
   assert.equal(dims.fork, "1");
   assert.equal(resolveAsset(""), DEFAULT_ASSET);
-  assert.equal(resolveAsset("../" + DEFAULT_ASSET), null);
+  assert.equal(resolveAsset("../etc/passwd"), null);
   assert.equal(resolveAsset(DEFAULT_ASSET), DEFAULT_ASSET);
 });

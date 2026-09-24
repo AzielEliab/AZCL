@@ -145,6 +145,15 @@ export function renderHome({ downloads = 0, bytes = null } = {}) {
     overflow-x: auto;
     color: var(--ink);
   }
+  .preview {
+    margin: 0.4rem 0 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--panel);
+  }
+  .preview img { display: block; width: 100%; height: auto; }
+  .preview figcaption { margin: 0; padding: 0.75rem 0.95rem 0.9rem; color: var(--muted); font-size: 0.92rem; }
   details { margin-top: 0.9rem; }
   summary { cursor: pointer; min-height: 2.75rem; display: flex; align-items: center; }
   .surface { margin: 0.4rem 0 0; color: var(--muted); }
@@ -205,6 +214,13 @@ export function renderHome({ downloads = 0, bytes = null } = {}) {
           <p><code>azcl serve</code> opens the vault UI at <code>http://127.0.0.1:7733</code>. <code>azcl mcp</code> speaks stdio MCP. That same local server publishes <code>/openapi.json</code>.</p>
         </li>
       </ul>
+    </section>
+    <section aria-labelledby="preview-title">
+      <h2 id="preview-title">Local vault</h2>
+      <figure class="preview">
+        <img src="/preview.png" alt="AZCL vault screen with search, sample library records, and hashchain tips." width="1280" height="800">
+        <figcaption>The local UI from <code>azcl serve</code>. The rows in this picture are the sample records in the repository fixture.</figcaption>
+      </figure>
     </section>
     <section aria-labelledby="local-title">
       <h2 id="local-title">After download</h2>
