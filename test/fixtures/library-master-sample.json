@@ -1,0 +1,80 @@
+{
+  "schema": "aziel.library.master.v1",
+  "author": "Aziel Eliab",
+  "updated_utc": "2026-09-18T01:57:11Z",
+  "append_only": true,
+  "records_sample": [
+    {
+      "record_id": "AZDOC-C9AA00D1FAE5",
+      "json_record_id": "JSONAZDOC-C9AA00D1FAE5",
+      "title": "I Aziel Personal \u2014 Classified \u2014 TriICycle Theory of Omega\u2013Alpha Continuity",
+      "concept": "I Aziel Personal \u2014 Classified \u2014 TriICycle Theory of Omega\u2013Alpha Continuity",
+      "content_sha256": "0b602744048e01ee4872848eff64e106da583253a447cdd0653e8a6618d23e1c",
+      "paper_chain_tip": "db5bb23083bc7aa8904106a04eedbbd4f0f62a003290dc18fa4f97f7894f4f5f",
+      "paper_chain_sequence": 8,
+      "chain_tip": "db5bb23083bc7aa8904106a04eedbbd4f0f62a003290dc18fa4f97f7894f4f5f",
+      "library": "aziel",
+      "metadata_url": "https://www.azielcorpuslibrary.net/record/AZDOC-C9AA00D1FAE5/metadata.json",
+      "file_url": "https://www.azielcorpuslibrary.net/file/AZDOC-C9AA00D1FAE5",
+      "added_utc": "2026-09-14T05:58:25.191Z"
+    },
+    {
+      "record_id": "AZDOC-BA3E482185AD",
+      "json_record_id": "JSONAZDOC-BA3E482185AD",
+      "title": "f53419056b94b69be05c8214cb8d8329f7e74fe99d8505ecfa8a72a9a6e0333f",
+      "concept": "f53419056b94b69be05c8214cb8d8329f7e74fe99d8505ecfa8a72a9a6e0333f",
+      "content_sha256": "5d89a91cd779ee53aacaa254cf2689e001970e135c97b0f0f74b4a8365caa50e",
+      "paper_chain_tip": "ac8857e22f44241cbb6c28d4683cc6d6f713342c679daa0c17ec06bc762e9e67",
+      "paper_chain_sequence": 8,
+      "chain_tip": "ac8857e22f44241cbb6c28d4683cc6d6f713342c679daa0c17ec06bc762e9e67",
+      "library": "aziel",
+      "metadata_url": "https://www.azielcorpuslibrary.net/record/AZDOC-BA3E482185AD/metadata.json",
+      "file_url": "https://www.azielcorpuslibrary.net/file/AZDOC-BA3E482185AD",
+      "added_utc": "2026-09-14T05:58:25.191Z"
+    },
+    {
+      "record_id": "AZDOC-41A751005D4A",
+      "json_record_id": "JSONAZDOC-41A751005D4A",
+      "title": "Harmonic Laws Series \u2013 Volume IV: Harmonic Medicine \u2013 Proof Protocol",
+      "concept": "Harmonic Laws Series \u2013 Volume IV: Harmonic Medicine \u2013 Proof Protocol",
+      "content_sha256": "078aaf84b6e490fed1a76a30cd96cb6cc89e003aeb6e7f476c23fcb67b228106",
+      "paper_chain_tip": "84ce1e80572caceea49e5ca61c0549aae886b83423fcdee55de37d77071b3316",
+      "paper_chain_sequence": 8,
+      "chain_tip": "84ce1e80572caceea49e5ca61c0549aae886b83423fcdee55de37d77071b3316",
+      "library": "aziel",
+      "metadata_url": "https://www.azielcorpuslibrary.net/record/AZDOC-41A751005D4A/metadata.json",
+      "file_url": "https://www.azielcorpuslibrary.net/file/AZDOC-41A751005D4A",
+      "added_utc": "2026-09-14T05:58:25.191Z"
+    },
+    {
+      "record_id": "AZDOC-11F2DD41879C",
+      "json_record_id": "JSONAZDOC-11F2DD41879C",
+      "title": "e0153ec534890c0069bd6315e462cb3d7a993f0d8bc0bec7100c63bf5cd446a4",
+      "concept": "e0153ec534890c0069bd6315e462cb3d7a993f0d8bc0bec7100c63bf5cd446a4",
+      "content_sha256": "a94b05d0f21c5af75223846f76c45bfb7ba74b125af7008267c18ec50155f2c5",
+      "paper_chain_tip": "ef79a72098be3a706a5d5237bb16c6bba55d35df08de3d3166f35f8f8378d8b2",
+      "paper_chain_sequence": 8,
+      "chain_tip": "ef79a72098be3a706a5d5237bb16c6bba55d35df08de3d3166f35f8f8378d8b2",
+      "library": "aziel",
+      "metadata_url": "https://www.azielcorpuslibrary.net/record/AZDOC-11F2DD41879C/metadata.json",
+      "file_url": "https://www.azielcorpuslibrary.net/file/AZDOC-11F2DD41879C",
+      "added_utc": "2026-09-14T05:58:25.191Z"
+    },
+    {
+      "record_id": "AZDOC-FB747F7DE8C6",
+      "json_record_id": "JSONAZDOC-FB747F7DE8C6",
+      "title": "Flame2Ember Hypothesis \u2014 Validation and \u2014 Replication Framework",
+      "concept": "Flame2Ember Hypothesis \u2014 Validation and \u2014 Replication Framework",
+      "content_sha256": "794c575ee25f4337b1ccd7d2011fd191b628b6770dfcf88c443009797caf3bda",
+      "paper_chain_tip": "a538fc9452d1887b9f654603e71b088a53a6c35ffe4804ab0eccf19689fc58be",
+      "paper_chain_sequence": 7,
+      "chain_tip": "a538fc9452d1887b9f654603e71b088a53a6c35ffe4804ab0eccf19689fc58be",
+      "library": "aziel",
+      "metadata_url": "https://www.azielcorpuslibrary.net/record/AZDOC-FB747F7DE8C6/metadata.json",
+      "file_url": "https://www.azielcorpuslibrary.net/file/AZDOC-FB747F7DE8C6",
+      "added_utc": "2026-09-14T05:58:25.191Z"
+    }
+  ],
+  "records_count": 206,
+  "note": "Full master lives on operator box; live source of truth is GET https://www.azielcorpuslibrary.net/v1/library-index"
+}
