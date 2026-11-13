@@ -142,9 +142,14 @@ Verify happens **before** a record is marked installed. A hash mismatch is a led
 
 ```bash
 npm test
+python3 -m unittest discover -s tests -v
 ```
 
-Covers SHA-256 verify, append-only master merge, CAS retention, and a mock-origin first import + incremental update.
+Node tests cover SHA-256 verify, append-only master merge, CAS retention, and a mock-origin first import + incremental update. The Python tests cover the heritage pip stub.
+
+## Python pip stub (heritage)
+
+`main` shipped an honest pip stub (`pyproject.toml`, `python3 -m azcl`) that prints **not ready yet**. That module is kept. The working client is the Node CLI above (`node dist/cli.js` / `npm link`). Do not treat `pip install -e .` as the vault.
 
 ## Identity
 
